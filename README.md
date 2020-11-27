@@ -5,4 +5,4 @@ Smart Search Algorithms Project
 - Working on apply most known search algorithms in
 the game (DFS, BFS, A*, Dijkstra, DP.... )
 - customizable models
-![Screenshot 1](https://github.com/Yassarooo/SmartSearchAlgorithms/1.jpg?raw=true)
+![Screenshot 1](https://github.com/Yassarooo/SmartSearchAlgorithms/blob/main/1.jpg?raw=false)
