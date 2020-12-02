@@ -565,6 +565,7 @@ public class Board : MonoBehaviour {
         queue.AddLast (LocalPath);
 
         int moves = 8;
+        bool neg = false;
 
         while (queue.Count != 0) {
 
@@ -580,13 +581,16 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
+                    if (moves < 0)
+                        neg = true;
                 }
 
-                if (LocalPath.Count == moves) {
+                if (LocalPath.Count == moves && !neg) {
                     Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count);
                     CopyPath (LocalPath, Path);
                     return;
                 } else {
+                    neg = false;
                     moves = 8;
                 }
             }
@@ -610,6 +614,7 @@ public class Board : MonoBehaviour {
         queue.AddLast (LocalPath);
 
         int moves = 8;
+        bool neg = false;
 
         while (queue.Count != 0) {
 
@@ -625,13 +630,16 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
+                    if (moves < 0)
+                        neg = true;
                 }
 
-                if (LocalPath.Count == moves) {
+                if (LocalPath.Count == moves && !neg) {
                     Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count);
                     CopyPath (LocalPath, Path);
                     return;
                 } else {
+                    neg = false;
                     moves = 8;
                 }
             }
