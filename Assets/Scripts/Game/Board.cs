@@ -24,6 +24,8 @@ public class Board : MonoBehaviour {
     private TileType selectedtype;
     private bool done = false;
     private Vector2 offset;
+    float xOffset, yOffset;
+    float startX, startY;
     private bool initpos = false, goalpos = false;
     private Tile[, ] board, temp;
     private Tile Ourtile, Goaltile, OurTempTile;
@@ -44,18 +46,19 @@ public class Board : MonoBehaviour {
         this.gameMgr = gameMgr;
         moves = gameMgr.hearts;
         DestroyAllTiles ();
+        startX = FirstTilePos.transform.position.x;
+        startY = FirstTilePos.transform.position.y;
 
         offset = matchPieceObject.GetComponent<SpriteRenderer> ().bounds.size;
-        StartCoroutine (CreateBoard (offset.x, offset.y));
+        xOffset = offset.x - 0.5f;
+        yOffset = offset.y - 0.5f;
+        StartCoroutine (CreateBoard ());
 
     }
 
-    private IEnumerator CreateBoard (float xOffset, float yOffset) {
+    private IEnumerator CreateBoard () {
         if (FirstTilePos == null)
             Debug.LogError ("[Board] Start position is empty!");
-
-        float startX = FirstTilePos.transform.position.x;
-        float startY = FirstTilePos.transform.position.y;
 
         board = new Tile[xSize, ySize];
         temp = new Tile[xSize, ySize];
@@ -105,25 +108,16 @@ public class Board : MonoBehaviour {
         DestroyAllTiles ();
         Tile[, ] randlevel = Levels.instance.GenerateLevels ();
 
-        float xOffset = offset.x;
-        float yOffset = offset.y;
         if (FirstTilePos == null)
             Debug.LogError ("[Board] Start position is empty!");
 
-        float startX = FirstTilePos.transform.position.x;
-        float startY = FirstTilePos.transform.position.y;
-
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
-                //Debug.Log ("board [" + x + "]" + "[" + y + "]" + ", X : " + startX + (xOffset * x));
-                //Debug.Log ("board [" + x + "]" + "[" + y + "]" + ", Y : " + startY + (yOffset * y));
                 var tile = Instantiate (
                     matchPieceObject,
-                    new Vector3 (startX + (xOffset * x), startY + (yOffset * y), 2),
+                    new Vector3 (startX + ((xOffset) * x), startY + ((yOffset) * y), 2),
                     matchPieceObject.transform.rotation,
                     FirstTilePos).AddComponent<Tile> ();
-                // List<TileType> possibleTypes = new List<TileType>();
-                // possibleTypes.AddRange(tileTypes);
 
                 tile.Init (this, randlevel[x, y].PosX, randlevel[x, y].PosY, randlevel[x, y].type, randlevel[x, y].visited, randlevel[x, y].neighbors, randlevel[x, y].history);
                 tile.GetComponent<SpriteRenderer> ().color = randlevel[x, y].type.color;
