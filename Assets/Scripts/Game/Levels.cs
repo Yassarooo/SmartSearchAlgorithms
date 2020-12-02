@@ -31,24 +31,30 @@ public class Levels : MonoBehaviour {
         levels.Add (level5 ());
         levels.Add (level6 ());
         levels.Add (level7 ());
+        levels.Add (veryrandom ());
 
         int r = rnd.Next (levels.Count);
-        List<Tile> NoneList = new List<Tile> ();
-        foreach (Tile t in levels[r]) {
-            if (t.type.name == "None")
-                NoneList.Add (t);
-        }
+        if (r == 8) {
+            Debug.LogError("Level 8");
+            return levels[r];
+        } else {
+            List<Tile> NoneList = new List<Tile> ();
+            foreach (Tile t in levels[r]) {
+                if (t.type.name == "None")
+                    NoneList.Add (t);
+            }
 
-        for (int rndtime = 0; rndtime < 3; rndtime++) {
-            int r2 = rnd.Next (PlusTypes.Count);
-            int r3 = rnd.Next (NoneList.Count);
-            Tile plustile = new Tile ();
-            plustile.Init (Board.instance, NoneList[r3].PosX, NoneList[r3].PosY, PlusTypes[r2], NoneList[r3].visited, NoneList[r3].neighbors, NoneList[r3].history);
-            levels[r][plustile.PosX, plustile.PosY] = plustile;
+            for (int rndtime = 0; rndtime < 3; rndtime++) {
+                int r2 = rnd.Next (PlusTypes.Count);
+                int r3 = rnd.Next (NoneList.Count);
+                Tile plustile = new Tile ();
+                plustile.Init (Board.instance, NoneList[r3].PosX, NoneList[r3].PosY, PlusTypes[r2], NoneList[r3].visited, NoneList[r3].neighbors, NoneList[r3].history);
+                levels[r][plustile.PosX, plustile.PosY] = plustile;
+            }
+            return levels[r];
+
         }
-        return levels[r];
     }
-
     public Tile[, ] level0 () {
 
         Tile[, ] level = new Tile[Board.instance.xSize, Board.instance.ySize];
@@ -104,7 +110,6 @@ public class Levels : MonoBehaviour {
 
         return level;
     }
-
     public Tile[, ] level3 () {
         Tile[, ] level = new Tile[Board.instance.xSize, Board.instance.ySize];
         TileType selectedtype;
@@ -215,6 +220,29 @@ public class Levels : MonoBehaviour {
         FillFrom (level, selectedtype, 0, 6, 6, 8);
         FillFrom (level, selectedtype, 4, 6, 0, 8);
 
+        return level;
+    }
+    public Tile[, ] veryrandom () {
+        Tile[, ] level = new Tile[Board.instance.xSize, Board.instance.ySize];
+        List<TileType> tilesTypes = new List<TileType> ();
+        tilesTypes.Add (Board.instance.tileTypes[0]);
+        tilesTypes.Add (Board.instance.tileTypes[1]);
+        tilesTypes.Add (Board.instance.tileTypes[2]);
+        tilesTypes.Add (Board.instance.tileTypes[5]);
+        tilesTypes.Add (Board.instance.tileTypes[6]);
+        tilesTypes.Add (Board.instance.tileTypes[7]);
+        tilesTypes.Add (Board.instance.tileTypes[8]);
+        tilesTypes.Add (Board.instance.tileTypes[9]);
+        TileType selectedtype;
+
+        for (int x = 0; x < Board.instance.xSize; x++)
+            for (int y = 0; y < Board.instance.ySize; y++) {
+                int r = rnd.Next(tilesTypes.Count);
+                selectedtype = tilesTypes[r];
+                Tile tile = new Tile ();
+                tile.Init (Board.instance, x, y, selectedtype, false, null, null);
+                level[x, y] = tile;
+            }
         return level;
     }
 
