@@ -35,33 +35,32 @@ public class Levels : MonoBehaviour {
         int r = rnd.Next (levels.Count);
         List<Tile> NoneList = new List<Tile> ();
         foreach (Tile t in levels[r]) {
-            if (t.type.PlusVal == 0)
+            if (t.type.name == "None")
                 NoneList.Add (t);
         }
-        int r2 = rnd.Next (PlusTypes.Count);
-        int r3 = rnd.Next (NoneList.Count);
 
-        Tile plustile = new Tile ();
-        plustile.Init (Board.instance, NoneList[r3].PosX, NoneList[r3].PosY, PlusTypes[r2], NoneList[r3].visited, NoneList[r3].neighbors, NoneList[r3].history);
-        levels[r][plustile.PosX, plustile.PosY] = plustile;
+        for (int rndtime = 0; rndtime < 3; rndtime++) {
+            int r2 = rnd.Next (PlusTypes.Count);
+            int r3 = rnd.Next (NoneList.Count);
+            Tile plustile = new Tile ();
+            plustile.Init (Board.instance, NoneList[r3].PosX, NoneList[r3].PosY, PlusTypes[r2], NoneList[r3].visited, NoneList[r3].neighbors, NoneList[r3].history);
+            levels[r][plustile.PosX, plustile.PosY] = plustile;
+        }
         return levels[r];
     }
+
     public Tile[, ] level0 () {
 
         Tile[, ] level = new Tile[Board.instance.xSize, Board.instance.ySize];
 
         TileType selectedtype;
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 0, 2, 0, 7);
-        FillFrom (level, selectedtype, 2, 3, 0, 4);
+        FillFrom (level, selectedtype, 0, 2, 0, 8);
+        FillFrom (level, selectedtype, 2, 3, 0, 5);
 
         selectedtype = Board.instance.tileTypes[1];
-        FillFrom (level, selectedtype, 2, 3, 4, 7);
-        FillFrom (level, selectedtype, 3, 5, 0, 7);
-
-        Tile t = new Tile ();
-        t.Init (Board.instance, 1, 4, Board.instance.tileTypes[2], false, null, null);
-        level[1, 4] = t;
+        FillFrom (level, selectedtype, 2, 3, 4, 8);
+        FillFrom (level, selectedtype, 3, 6, 0, 8);
 
         return level;
     }
@@ -70,18 +69,18 @@ public class Levels : MonoBehaviour {
         TileType selectedtype;
 
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 1, 5, 0, 1);
-        FillFrom (level, selectedtype, 0, 5, 1, 2);
-        FillFrom (level, selectedtype, 2, 5, 2, 3);
-        FillFrom (level, selectedtype, 0, 5, 3, 4);
-        FillFrom (level, selectedtype, 4, 5, 4, 5);
-        FillFrom (level, selectedtype, 0, 5, 5, 6);
+        FillFrom (level, selectedtype, 1, 6, 0, 1);
+        FillFrom (level, selectedtype, 0, 6, 1, 2);
+        FillFrom (level, selectedtype, 2, 6, 2, 3);
+        FillFrom (level, selectedtype, 0, 6, 3, 4);
+        FillFrom (level, selectedtype, 4, 6, 4, 5);
+        FillFrom (level, selectedtype, 0, 6, 5, 6);
 
         selectedtype = Board.instance.tileTypes[1];
         FillFrom (level, selectedtype, 0, 1, 0, 1);
         FillFrom (level, selectedtype, 0, 2, 2, 3);
         FillFrom (level, selectedtype, 0, 4, 4, 5);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
 
         return level;
     }
@@ -90,18 +89,18 @@ public class Levels : MonoBehaviour {
         TileType selectedtype;
 
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 0, 1, 0, 7);
-        FillFrom (level, selectedtype, 3, 4, 0, 7);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
-        FillFrom (level, selectedtype, 4, 5, 0, 1);
-        FillFrom (level, selectedtype, 4, 5, 2, 3);
-        FillFrom (level, selectedtype, 4, 5, 4, 5);
+        FillFrom (level, selectedtype, 0, 1, 0, 8);
+        FillFrom (level, selectedtype, 3, 4, 0, 8);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
+        FillFrom (level, selectedtype, 4, 6, 0, 1);
+        FillFrom (level, selectedtype, 4, 6, 2, 3);
+        FillFrom (level, selectedtype, 4, 6, 4, 5);
 
         selectedtype = Board.instance.tileTypes[1];
         FillFrom (level, selectedtype, 1, 3, 0, 6);
-        FillFrom (level, selectedtype, 4, 5, 1, 2);
-        FillFrom (level, selectedtype, 4, 5, 3, 4);
-        FillFrom (level, selectedtype, 4, 5, 5, 6);
+        FillFrom (level, selectedtype, 4, 6, 1, 2);
+        FillFrom (level, selectedtype, 4, 6, 3, 4);
+        FillFrom (level, selectedtype, 4, 6, 5, 6);
 
         return level;
     }
@@ -111,10 +110,10 @@ public class Levels : MonoBehaviour {
         TileType selectedtype;
 
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 0, 1, 0, 7);
-        FillFrom (level, selectedtype, 2, 3, 0, 7);
-        FillFrom (level, selectedtype, 4, 5, 0, 7);
-        FillFrom (level, selectedtype, 0, 5, 5, 7);
+        FillFrom (level, selectedtype, 0, 1, 0, 8);
+        FillFrom (level, selectedtype, 2, 3, 0, 8);
+        FillFrom (level, selectedtype, 4, 6, 0, 8);
+        FillFrom (level, selectedtype, 0, 6, 5, 8);
 
         selectedtype = Board.instance.tileTypes[1];
         FillFrom (level, selectedtype, 1, 3, 0, 5);
@@ -128,23 +127,23 @@ public class Levels : MonoBehaviour {
 
         selectedtype = Board.instance.tileTypes[0];
 
-        FillFrom (level, selectedtype, 0, 5, 0, 7);
+        FillFrom (level, selectedtype, 0, 6, 0, 8);
 
-        FillFrom (level, selectedtype, 0, 5, 2, 4);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
-        FillFrom (level, selectedtype, 1, 2, 1, 7);
-        FillFrom (level, selectedtype, 3, 4, 1, 7);
+        FillFrom (level, selectedtype, 0, 6, 2, 4);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
+        FillFrom (level, selectedtype, 1, 2, 1, 8);
+        FillFrom (level, selectedtype, 3, 4, 1, 8);
         FillFrom (level, selectedtype, 1, 2, 1, 2);
         FillFrom (level, selectedtype, 3, 4, 1, 2);
 
         selectedtype = Board.instance.tileTypes[1];
-        FillFrom (level, selectedtype, 0, 5, 0, 1);
+        FillFrom (level, selectedtype, 0, 6, 0, 1);
         FillFrom (level, selectedtype, 0, 1, 1, 2);
         FillFrom (level, selectedtype, 2, 3, 1, 2);
-        FillFrom (level, selectedtype, 4, 5, 1, 2);
-        FillFrom (level, selectedtype, 0, 1, 4, 7);
-        FillFrom (level, selectedtype, 2, 3, 4, 7);
-        FillFrom (level, selectedtype, 4, 5, 4, 7);
+        FillFrom (level, selectedtype, 4, 6, 1, 2);
+        FillFrom (level, selectedtype, 0, 1, 4, 8);
+        FillFrom (level, selectedtype, 2, 3, 4, 8);
+        FillFrom (level, selectedtype, 4, 6, 4, 8);
 
         return level;
     }
@@ -153,19 +152,19 @@ public class Levels : MonoBehaviour {
         TileType selectedtype;
 
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 0, 5, 0, 1);
-        FillFrom (level, selectedtype, 0, 5, 2, 3);
-        FillFrom (level, selectedtype, 0, 5, 4, 5);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
-        FillFrom (level, selectedtype, 2, 3, 0, 7);
+        FillFrom (level, selectedtype, 0, 6, 0, 1);
+        FillFrom (level, selectedtype, 0, 6, 2, 3);
+        FillFrom (level, selectedtype, 0, 6, 4, 5);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
+        FillFrom (level, selectedtype, 2, 3, 0, 8);
 
         selectedtype = Board.instance.tileTypes[1];
         FillFrom (level, selectedtype, 0, 2, 1, 2);
         FillFrom (level, selectedtype, 0, 2, 3, 4);
         FillFrom (level, selectedtype, 0, 2, 5, 6);
-        FillFrom (level, selectedtype, 3, 5, 1, 2);
-        FillFrom (level, selectedtype, 3, 5, 3, 4);
-        FillFrom (level, selectedtype, 3, 5, 5, 6);
+        FillFrom (level, selectedtype, 3, 6, 1, 2);
+        FillFrom (level, selectedtype, 3, 6, 3, 4);
+        FillFrom (level, selectedtype, 3, 6, 5, 6);
 
         return level;
     }
@@ -174,22 +173,22 @@ public class Levels : MonoBehaviour {
         TileType selectedtype;
 
         selectedtype = Board.instance.tileTypes[0];
-        FillFrom (level, selectedtype, 0, 5, 1, 2);
-        FillFrom (level, selectedtype, 0, 5, 4, 5);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
+        FillFrom (level, selectedtype, 0, 6, 1, 2);
+        FillFrom (level, selectedtype, 0, 6, 4, 5);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
         FillFrom (level, selectedtype, 1, 2, 0, 5);
         FillFrom (level, selectedtype, 3, 4, 0, 5);
-        FillFrom (level, selectedtype, 0, 1, 4, 7);
-        FillFrom (level, selectedtype, 2, 3, 4, 7);
-        FillFrom (level, selectedtype, 4, 5, 4, 7);
+        FillFrom (level, selectedtype, 0, 1, 4, 8);
+        FillFrom (level, selectedtype, 2, 3, 4, 8);
+        FillFrom (level, selectedtype, 4, 6, 4, 8);
 
         selectedtype = Board.instance.tileTypes[1];
         FillFrom (level, selectedtype, 0, 1, 0, 1);
         FillFrom (level, selectedtype, 2, 3, 0, 1);
-        FillFrom (level, selectedtype, 4, 5, 0, 1);
+        FillFrom (level, selectedtype, 4, 6, 0, 1);
         FillFrom (level, selectedtype, 0, 1, 2, 4);
         FillFrom (level, selectedtype, 2, 3, 2, 4);
-        FillFrom (level, selectedtype, 4, 5, 2, 4);
+        FillFrom (level, selectedtype, 4, 6, 2, 4);
 
         FillFrom (level, selectedtype, 1, 2, 5, 6);
         FillFrom (level, selectedtype, 3, 4, 5, 6);
@@ -213,8 +212,8 @@ public class Levels : MonoBehaviour {
         FillFrom (level, selectedtype, 0, 1, 1, 2);
         FillFrom (level, selectedtype, 1, 2, 2, 3);
         FillFrom (level, selectedtype, 3, 4, 4, 5);
-        FillFrom (level, selectedtype, 0, 5, 6, 7);
-        FillFrom (level, selectedtype, 4, 5, 0, 7);
+        FillFrom (level, selectedtype, 0, 6, 6, 8);
+        FillFrom (level, selectedtype, 4, 6, 0, 8);
 
         return level;
     }
