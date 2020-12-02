@@ -573,6 +573,8 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
+                    if (moves == 0 && f.type.name != "Goal")
+                        neg = true;
                     if (moves < 0)
                         neg = true;
                 }
@@ -622,6 +624,8 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
+                    if (moves == 0 && f.type.name != "Goal")
+                        neg = true;
                     if (moves < 0)
                         neg = true;
                 }

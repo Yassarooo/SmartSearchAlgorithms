@@ -32,6 +32,7 @@ public class Levels : MonoBehaviour {
         levels.Add (level6 ());
         levels.Add (level7 ());
         levels.Add (veryrandom ());
+        levels.Add (veryrandom ());
 
         int r = rnd.Next (levels.Count);
         if (r == 8) {
@@ -228,9 +229,13 @@ public class Levels : MonoBehaviour {
         tilesTypes.Add (Board.instance.tileTypes[0]);
         tilesTypes.Add (Board.instance.tileTypes[1]);
         tilesTypes.Add (Board.instance.tileTypes[2]);
+        tilesTypes.Add (Board.instance.tileTypes[9]);
         tilesTypes.Add (Board.instance.tileTypes[5]);
+        tilesTypes.Add (Board.instance.tileTypes[9]);
+        tilesTypes.Add (Board.instance.tileTypes[9]);
         tilesTypes.Add (Board.instance.tileTypes[6]);
         tilesTypes.Add (Board.instance.tileTypes[7]);
+        tilesTypes.Add (Board.instance.tileTypes[9]);
         tilesTypes.Add (Board.instance.tileTypes[8]);
         tilesTypes.Add (Board.instance.tileTypes[9]);
         TileType selectedtype;
