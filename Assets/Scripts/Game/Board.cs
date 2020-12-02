@@ -50,8 +50,8 @@ public class Board : MonoBehaviour {
         startY = FirstTilePos.transform.position.y;
 
         offset = matchPieceObject.GetComponent<SpriteRenderer> ().bounds.size;
-        xOffset = offset.x - 0.5f;
-        yOffset = offset.y - 0.5f;
+        xOffset = offset.x - 0.2f;
+        yOffset = offset.y - 0.2f;
         StartCoroutine (CreateBoard ());
 
     }
@@ -140,11 +140,9 @@ public class Board : MonoBehaviour {
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
-                //Debug.Log ("board [" + x + "]" + "[" + y + "]" + ", X : " + startX + (xOffset * x));
-                //Debug.Log ("board [" + x + "]" + "[" + y + "]" + ", Y : " + startY + (yOffset * y));
                 var tile = Instantiate (
                     matchPieceObject,
-                    new Vector3 (FirstTilePos.transform.position.x + (offset.x * x), FirstTilePos.transform.position.y + (offset.y * y), 2),
+                    new Vector3 (FirstTilePos.transform.position.x + (xOffset * x), FirstTilePos.transform.position.y + (yOffset * y), 2),
                     matchPieceObject.transform.rotation,
                     FirstTilePos) as GameObject;
                 tile.AddComponent<Tile> ();
@@ -258,7 +256,7 @@ public class Board : MonoBehaviour {
             TileType t = tileTypes[3];
             var tile = Instantiate (
                 matchPieceObject,
-                new Vector3 (FirstTilePos.transform.position.x + (offset.x * X), FirstTilePos.transform.position.y + (offset.y * Y), 2),
+                new Vector3 (FirstTilePos.transform.position.x + (xOffset * X), FirstTilePos.transform.position.y + (yOffset * Y), 2),
                 matchPieceObject.transform.rotation,
                 FirstTilePos) as GameObject;
             tile.AddComponent<Tile> ();
@@ -280,7 +278,7 @@ public class Board : MonoBehaviour {
             TileType t = tileTypes[4];
             var tile = Instantiate (
                 matchPieceObject,
-                new Vector3 (FirstTilePos.transform.position.x + (offset.x * X), FirstTilePos.transform.position.y + (offset.y * Y), 2),
+                new Vector3 (FirstTilePos.transform.position.x + (xOffset * X), FirstTilePos.transform.position.y + (yOffset * Y), 2),
                 matchPieceObject.transform.rotation,
                 FirstTilePos) as GameObject;
             tile.AddComponent<Tile> ();
