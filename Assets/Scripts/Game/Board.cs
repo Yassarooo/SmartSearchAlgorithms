@@ -417,8 +417,6 @@ public class Board : MonoBehaviour {
     }
 
     private void MoveTile (Tile[, ] state, Tile active, int newX, int newY) {
-        Debug.LogError (active.PosX + " , " + active.PosY);
-        Debug.LogError (newX + " , " + newY);
         if (ValidMove (state, newX, newY)) {
             //edit moves
             moves += state[newX, newY].type.PlusVal - 1;
@@ -573,17 +571,22 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
-                    if (moves == 0 && f.type.name != "Goal")
+                    moves += f.type.PlusVal;
+                    if (moves == 0 && f.type.name != "Goal") {
+                        //Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
                         neg = true;
-                    if (moves < 0)
+                    }
+                    if (moves < 0) {
+                        //Debug.LogError ("moves < 0 \n neg=true;");
                         neg = true;
+                    }
                 }
-
                 if (LocalPath.Count == moves && !neg) {
                     Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count);
                     CopyPath (LocalPath, Path);
                     return;
                 } else {
+                    Debug.LogError ("else \n neg=false;");
                     neg = false;
                     moves = 8;
                 }
@@ -624,20 +627,25 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
-                    if (moves == 0 && f.type.name != "Goal")
+                    if (moves == 0 && f.type.name != "Goal") {
+                        //Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
                         neg = true;
-                    if (moves < 0)
+                    }
+                    if (moves < 0) {
+                        //Debug.LogError ("moves < 0 \n neg=true;");
                         neg = true;
+                    }
                 }
-
                 if (LocalPath.Count == moves && !neg) {
                     Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count);
                     CopyPath (LocalPath, Path);
                     return;
                 } else {
+                    Debug.LogError ("else \n neg=false;");
                     neg = false;
                     moves = 8;
                 }
+
             }
 
             if (j.neighbors.Count != 0) {
