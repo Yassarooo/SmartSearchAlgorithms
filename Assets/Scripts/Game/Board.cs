@@ -628,11 +628,11 @@ public class Board : MonoBehaviour {
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
                     if (moves == 0 && f.type.name != "Goal") {
-                        //Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
+                        Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
                         neg = true;
                     }
                     if (moves < 0) {
-                        //Debug.LogError ("moves < 0 \n neg=true;");
+                        Debug.LogError ("moves < 0 \n neg=true;");
                         neg = true;
                     }
                 }
