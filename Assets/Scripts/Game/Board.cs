@@ -309,32 +309,24 @@ public class Board : MonoBehaviour {
                 UiManager.instance.GenerateTxt (4);
                 return true;
             }
-            if (state[X, Y].type.name == "wall") {
-
+            if (state[X, Y].type.name == "Wall") {
                 Debug.LogError ("Wall !");
                 UiManager.instance.GenerateTxt (5);
                 return false;
             }
             if (state[X, Y].visited) {
-
                 Debug.LogError ("Visited !");
                 UiManager.instance.GenerateTxt (6);
                 return false;
             }
-            if (moves == 0) {
-                Debug.LogError ("insufficient Moves !");
-                return false;
-            }
-            if ((X <= xSize || X > 0) || (Y <= ySize || Y > 0)) {
-                Debug.LogError ("InValid Move !");
-                return false;
-            }
         } catch (Exception e) {
+            UiManager.instance.GenerateTxt (5);
             Debug.Log (e);
         }
 
         return false;
     }
+
     public Tile[, ] Copy (Tile[, ] Copy, Tile[, ] Paste) {
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < ySize; y++) {
@@ -352,12 +344,12 @@ public class Board : MonoBehaviour {
     }
     public bool CheckGoal (Tile[, ] state, Tile active) {
 
-        if (state[active.PosX, active.PosY].type.name == "Goal" && moves == 0) {
+        if (state[active.PosX, active.PosY].type.name == "Goal" && moves <= 0) {
             UiManager.instance.ShowGameOverPanel (false);
             UiManager.instance.ShowGoalPanel (true);
             //Time.timeScale = 0;
             return true;
-        } else if (state[active.PosX, active.PosY].type.name != "Goal" && moves == 0 || state[active.PosX, active.PosY].type.name == "Goal" && moves != 0) {
+        } else if (state[active.PosX, active.PosY].type.name != "Goal" && moves <= 0 || state[active.PosX, active.PosY].type.name == "Goal" && moves != 0) {
             UiManager.instance.ShowGameOverPanel (true);
             UiManager.instance.ShowGoalPanel (false);
             //Time.timeScale = 0;
@@ -368,19 +360,19 @@ public class Board : MonoBehaviour {
     public void MoveDirection (string dir) {
         if (dir == "Left") {
             temp = GetNextState (temp, OurTempTile, "Left");
-            Debug.LogError (Ourtile.PosX + "(ourtile) , " + Ourtile.PosY);
+            Debug.LogError (OurTempTile.PosX + "(ourtile) , " + OurTempTile.PosY);
             ReplaceBoard (temp);
         } else if (dir == "Right") {
             temp = GetNextState (temp, OurTempTile, "Right");
-            Debug.LogError (Ourtile.PosX + "(ourtile) , " + Ourtile.PosY);
+            Debug.LogError (OurTempTile.PosX + "(ourtile) , " + OurTempTile.PosY);
             ReplaceBoard (temp);
         } else if (dir == "Up") {
             temp = GetNextState (temp, OurTempTile, "Up");
-            Debug.LogError (Ourtile.PosX + "(ourtile) , " + Ourtile.PosY);
+            Debug.LogError (OurTempTile.PosX + "(ourtile) , " + OurTempTile.PosY);
             ReplaceBoard (temp);
         } else if (dir == "Down") {
             temp = GetNextState (temp, OurTempTile, "Down");
-            Debug.LogError (Ourtile.PosX + "(ourtile) , " + Ourtile.PosY);
+            Debug.LogError (OurTempTile.PosX + "(ourtile) , " + OurTempTile.PosY);
             ReplaceBoard (temp);
         } else if (dir == "DFS" || dir == "BFS" || dir == "UCS") {
             StartCoroutine (ApplyAlgo (dir));
@@ -408,16 +400,14 @@ public class Board : MonoBehaviour {
             newX = active.PosX;
             newY = active.PosY - 1;
         }
-        if (newX != -1 && newY != -1) {
 
-            MoveTile (nextstate, active, newX, newY);
-            return nextstate;
-        } else
-            return null;
+        MoveTile (nextstate, active, newX, newY);
+        return nextstate;
     }
 
     private void MoveTile (Tile[, ] state, Tile active, int newX, int newY) {
         if (ValidMove (state, newX, newY)) {
+            Debug.LogError ("Valid Move in moveTile");
             //edit moves
             moves += state[newX, newY].type.PlusVal - 1;
 
@@ -429,12 +419,10 @@ public class Board : MonoBehaviour {
             tile.Init (this, newX, newY, tileTypes[3], true, state[newX, newY].neighbors, state[newX, newY].history);
 
             //if reached goal
-            if (state[newX, newY].type.name == "Goal") {
-                active.Init (this, tile.PosX, tile.PosY, tileTypes[3], true, tile.neighbors, tile.history);
-            } else {
+            if (state[newX, newY].type.name != "Goal")
                 state[newX, newY] = tile;
-                active.Init (this, tile.PosX, tile.PosY, tileTypes[3], true, tile.neighbors, tile.history);
-            }
+
+            active.Init (this, tile.PosX, tile.PosY, tileTypes[3], true, tile.neighbors, tile.history);
 
         }
     }
@@ -555,6 +543,7 @@ public class Board : MonoBehaviour {
         queue.AddLast (LocalPath);
 
         int moves = 8;
+        int cntr = 8;
         bool neg = false;
 
         while (queue.Count != 0) {
@@ -571,12 +560,12 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
-                    moves += f.type.PlusVal;
-                    if (moves == 0 && f.type.name != "Goal") {
+                    cntr += f.type.PlusVal - 1;
+                    if (cntr <= 0 && f.type.name != "Goal") {
                         //Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
                         neg = true;
                     }
-                    if (moves < 0) {
+                    if (cntr < 0) {
                         //Debug.LogError ("moves < 0 \n neg=true;");
                         neg = true;
                     }
@@ -611,6 +600,7 @@ public class Board : MonoBehaviour {
         queue.AddLast (LocalPath);
 
         int moves = 8;
+        int cntr = 8;
         bool neg = false;
 
         while (queue.Count != 0) {
@@ -627,23 +617,26 @@ public class Board : MonoBehaviour {
 
                 foreach (Tile f in LocalPath) {
                     moves += f.type.PlusVal;
-                    if (moves == 0 && f.type.name != "Goal") {
+                    cntr += f.type.PlusVal - 1;
+                    if (cntr <= 0 && f.type.name != "Goal") {
                         Debug.LogError ("moves == 0 && f.type.name != Goal \n neg=true;");
                         neg = true;
                     }
-                    if (moves < 0) {
+                    if (cntr < 0) {
                         Debug.LogError ("moves < 0 \n neg=true;");
                         neg = true;
                     }
+                    Debug.LogError (moves);
                 }
                 if (LocalPath.Count == moves && !neg) {
-                    Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count);
+                    Debug.LogError ("LocalPath.Count == moves, count(moves) : " + LocalPath.Count + neg);
                     CopyPath (LocalPath, Path);
                     return;
                 } else {
-                    Debug.LogError ("else \n neg=false;");
+                    Debug.LogError ("else \n neg=false; \n moves=8  " + neg);
                     neg = false;
                     moves = 8;
+                    cntr = 8;
                 }
 
             }

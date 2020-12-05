@@ -37,7 +37,6 @@ public class Levels : MonoBehaviour {
 
         int r = rnd.Next (levels.Count);
         if (r == 8) {
-            Debug.LogError("Level 8");
             return levels[r];
         } else {
             List<Tile> NoneList = new List<Tile> ();
