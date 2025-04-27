@@ -1,10 +1,9 @@
 # SmartSearchAlgorithms
 Smart Search Algorithms Project
 
-- Unity3D Engine / C#
-- Working on apply most known search algorithms in
-the game (DFS, BFS, A*, Dijkstra, DP.... )
-- customizable models
+- This game is developed using Unity3D Engine / C# language.
+- The goal is to demonstrate how different search algorithms work (DFS, BFS, A*, Dijkstra, DP.... )
+- Used customizable models
 
  <div class="row">
   <div class="column">
